@@ -1,4 +1,6 @@
 const multer = require("multer");
+const fs = require("fs");
+
 if (!fs.existsSync("uploads/orders")) {
   fs.mkdirSync("uploads/orders", {
     recursive: true,

@@ -1,5 +1,9 @@
 const multer = require("multer");
-
+if (!fs.existsSync("uploads/orders")) {
+  fs.mkdirSync("uploads/orders", {
+    recursive: true,
+  });
+}
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/orders");
@@ -12,7 +16,7 @@ const storage = multer.diskStorage({
     );
   },
 });
-
+const fs = require("fs");
 const fileFilter = (req, file, cb) => {
 
   const allowedTypes = [

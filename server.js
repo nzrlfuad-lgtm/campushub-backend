@@ -36,3 +36,16 @@ sequelize.sync().then(() => {
     console.log(`Server running on port ${PORT}`);
   });
 });
+
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Database connected");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database error:", err);
+  });

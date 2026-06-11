@@ -112,4 +112,44 @@ router.delete(
 
   }
 });
+
+router.put(
+  "/:id",
+  authMiddleware,
+  async (req, res) => {
+    try {
+
+      const product = await Product.findByPk(
+        req.params.id
+      );
+
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Produk tidak ditemukan",
+        });
+      }
+
+      await product.update({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+      });
+
+      res.json({
+        success: true,
+        product,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+
+    }
+  }
+);
+
 module.exports = router;

@@ -4,29 +4,23 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+// Import Routes
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+// Tambahkan route lain jika ada (misal: orderRoutes)
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Panggil Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+
 app.get("/", (req, res) => {
   res.send("Backend CampusHub Berhasil Jalan!");
-});
-
-// Route pengetesan untuk melacak file mana yang bikin crash
-app.get("/api/debug", (req, res) => {
-  try {
-    const db = require("./config/db");
-    const authRoutes = require("./routes/authRoutes");
-    res.json({ message: "Semua modul berhasil di-load tanpa crash!" });
-  } catch (error) {
-    res.status(500).json({
-      message: "Gagal me-load modul",
-      error: error.message,
-      stack: error.stack
-    });
-  }
 });
 
 module.exports = app;

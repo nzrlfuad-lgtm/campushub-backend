@@ -1,26 +1,21 @@
 require("dotenv").config();
-const { Sequelize } = require("sequelize");
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-  process.env.MYSQLDATABASE || process.env.DB_NAME,
-  process.env.MYSQLUSER || process.env.DB_USER,
-  process.env.MYSQLPASSWORD || process.env.DB_PASSWORD,
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    host: process.env.MYSQLHOST || process.env.DB_HOST,
-    port: process.env.MYSQLPORT || process.env.DB_PORT || 24464,
-    dialect: "mysql",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'mysql',
+    dialectModule: require('mysql2'),
     dialectOptions: {
       ssl: {
         rejectUnauthorized: false
       }
-    },
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
     }
   }
 );
 
-module.exports = sequelize;
+module.exports = sequelize; // <-- Jika diekspor langsung seperti ini

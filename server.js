@@ -14,10 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Route Khusus Sync Database (Aman untuk Vercel Serverless)
 app.get("/api/sync-db", async (req, res) => {
   try {
-    await db.sequelize.sync({ alter: true });
+    // Jika db adalah instance Sequelize langsung
+    await db.sync({ alter: true });
     res.json({ message: "Database & tabel berhasil di-sync ke Aiven!" });
   } catch (error) {
     res.status(500).json({ message: "Gagal sync database", error: error.message });

@@ -31,15 +31,22 @@ app.get("/", (req, res) => {
 const PORT =
   process.env.PORT || 5000;
   
+// Sync database
 sequelize
   .sync()
   .then(() => {
     console.log("Database connected");
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
   })
   .catch((err) => {
     console.error("Database error:", err);
   });
+
+// Jalankan server lokal
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// WAJIB UNTUK VERCEL:
+module.exports = app;

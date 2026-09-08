@@ -3,10 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+// TAMBAHKAN IMPORT INI DI ATAS:
 const sequelize = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-// const productRoutes = require("./routes/productRoutes");
-// const orderRoutes = require("./routes/orderRoutes");
+const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("Backend CampusHub Berhasil Jalan!");
 });
 
-// Test route untuk cek koneksi database di Vercel
+// Test route koneksi database
 app.get("/api/test-db", async (req, res) => {
   try {
     await sequelize.authenticate();
@@ -28,6 +29,9 @@ app.get("/api/test-db", async (req, res) => {
   }
 });
 
+// Panggil semua routes
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
 
 module.exports = app;
